@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOCHI.OLED // Masuk & Daftar Pembeli — Official Smart Keychain Store</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Space Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Stylesheet (CSS Terpisah) -->
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- TOP STATUS BAR (MURNI UNTUK PEMBELI - TANPA LINK ADMIN) -->
+    <div class="bg-slate-900 text-cyan-400 text-xs font-mono-tech py-2 px-4 border-b-2 border-slate-900">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>OFFICIAL STOREFRONT // GERBANG MASUK &amp; MEMBER PEMBELI MOCHI.OLED</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="live-stock-ticker" class="hidden sm:inline text-slate-300">Memuat stok katalog...</span>
+                <span class="text-emerald-400 font-bold flex items-center gap-1">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                    <span>GARANSI RESMI 100%</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER UTAMA PEMBELI -->
+    <header class="bg-white/95 backdrop-blur border-b-2 border-slate-900 sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center border-2 border-slate-900 shadow-[2px_2px_0px_#06b6d4]">
+                    <div class="w-6 h-4 bg-black rounded-sm border border-cyan-400 flex items-center justify-center gap-1">
+                        <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>
+                        <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg tracking-tight block leading-none">MOCHI<span class="text-cyan-600">.OLED</span></span>
+                    <span class="font-mono-tech text-[10px] text-slate-500 block">SMART KEYCHAIN OFFICIAL STORE</span>
+                </div>
+            </div>
+
+            <!-- Info Layanan Pembeli -->
+            <div class="flex items-center gap-2.5">
+                <div class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-300 text-xs font-mono-tech text-slate-700">
+                    <i data-lucide="badge-check" class="w-4 h-4 text-cyan-600"></i>
+                    <span>100% Garansi Layar OLED</span>
+                </div>
+                <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-50 border-2 border-slate-900 text-xs font-mono-tech font-bold text-slate-900">
+                    <i data-lucide="truck" class="w-3.5 h-3.5 text-cyan-700"></i>
+                    <span>Pengiriman Seluruh Indonesia</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- MAIN CONTENT: SPLIT SHOWCASE & LOGIN / DATABASE AKUN PEMBELI -->
+    <main class="flex-grow flex items-center py-8 sm:py-12 px-4 sm:px-6">
+        <div class="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+            <!-- ========================================================= -->
+            <!-- KOLOM KIRI (7 Kolom): INTERACTIVE SHOWCASE UNTUK PEMBELI  -->
+            <!-- ========================================================= -->
+            <div class="lg:col-span-7 space-y-6 order-2 lg:order-1">
+                <div class="wf-box rounded-2xl p-6 sm:p-8 bg-white relative overflow-hidden">
+                    <div class="absolute top-3 right-4 font-mono-tech text-[11px] text-slate-400 hidden sm:block">
+                        [OFFICIAL_BUYER_STORE_V1]
+                    </div>
+
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-cyan-50 border border-slate-900 font-mono-tech text-xs font-bold text-slate-900 mb-4">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        READY STOCK INDONESIA • PENGIRIMAN SETIAP HARI
+                    </div>
+
+                    <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight mb-3">
+                        Masuk untuk Belanja <span class="underline decoration-cyan-400 decoration-4">Ganci Mochi OLED</span> Favoritmu!
+                    </h1>
+
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+                        Nikmati kemudahan pemesanan <strong>Ganci &amp; Robot Meja Mochi OLED</strong> dengan <strong>6 Mini-Games Retro</strong> (Flappy Bird, Dino Run, Pong, Snake, Breakout, Stacker), <strong>Jam Meja Wi-Fi Otomatis</strong>, <strong>Pomodoro Timer</strong>, <strong>Stopwatch</strong>, <strong>100+ Quotes Motivasi</strong>, dan <strong>Efek Suara Imut</strong>. Buat akun pembeli untuk checkout cepat via <strong>QRIS Dinamis, E-Wallet, Transfer SeaBank, atau COD</strong>.
+                    </p>
+
+                    <!-- SIMULATOR MASKOT MOCHI REAKTIF TERHADAP AKTIVITAS LOGIN -->
+                    <div class="p-5 rounded-2xl bg-slate-100 border-2 border-slate-900 grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
+                        <!-- Visual Ganci Mochi -->
+                        <div class="sm:col-span-5 flex flex-col items-center">
+                            <div class="w-6 h-6 rounded-full border-[3px] border-slate-400 -mb-1.5"></div>
+                            <div class="w-2.5 h-4 border-2 border-slate-500 bg-slate-300 rounded-sm -mb-1 z-10"></div>
+                            <div id="mascot-casing" class="w-44 h-36 bg-slate-900 rounded-[1.8rem] p-3 border-4 border-slate-950 shadow-[0_7px_0_#334155] flex flex-col items-center justify-center transition-all duration-300">
+                                <div class="w-10 h-1 bg-slate-700 rounded-full mb-1.5"></div>
+                                <div onclick="cycleMascotExp()" title="Klik layar untuk ganti ekspresi!" class="oled-screen w-36 h-20 rounded-xl border border-slate-800 flex items-center justify-center cursor-pointer select-none">
+                                    <div class="oled-scanline"></div>
+                                    <div id="mascot-face" class="w-full h-full flex items-center justify-center"></div>
+                                </div>
+                                <div class="mt-1.5 flex items-center justify-between w-full px-2">
+                                    <span class="font-mono-tech text-[8px] text-slate-400">MOCHI-RX</span>
+                                    <span id="mascot-exp-tag" class="font-mono-tech text-[8px] text-cyan-400">EXP: NORMAL</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dialog Interaktif Mochi & Pemilihan Warna Casing Preview -->
+                        <div class="sm:col-span-7 space-y-3">
+                            <div class="wf-box-sm p-3.5 rounded-xl bg-white relative">
+                                <div class="font-mono-tech text-[10px] font-bold text-cyan-700 uppercase mb-1 flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-cyan-500"></span>
+                                    <span>MOCHI COMPANION STATUS:</span>
+                                </div>
+                                <p id="mascot-speech" class="text-xs sm:text-sm font-medium text-slate-800 leading-relaxed">
+                                    "Halo Kak! Silakan masuk atau buat akun pembeli baru untuk memilih varian warna &amp; ekspresi Ganci Mochi OLED!"
+                                </p>
+                            </div>
+
+                            <!-- Ganti Warna Casing Preview -->
+                            <div class="flex items-center justify-between bg-white px-3 py-2 rounded-xl border border-slate-300">
+                                <span class="font-mono-tech text-[11px] font-bold text-slate-600">Coba Warna Casing:</span>
+                                <div class="flex items-center gap-1.5">
+                                    <button type="button" onclick="setMascotCasing('#0f172a', 'Stealth Black')" class="w-5 h-5 rounded-full bg-slate-900 border-2 border-slate-900 hover:scale-110 transition" title="Stealth Black"></button>
+                                    <button type="button" onclick="setMascotCasing('#f8fafc', 'Classic White')" class="w-5 h-5 rounded-full bg-slate-50 border-2 border-slate-900 hover:scale-110 transition" title="Classic White"></button>
+                                    <button type="button" onclick="setMascotCasing('#e11d48', 'Mecha Red RX')" class="w-5 h-5 rounded-full bg-rose-600 border-2 border-slate-900 hover:scale-110 transition" title="Mecha Red"></button>
+                                    <button type="button" onclick="setMascotCasing('#fbcfe8', 'Sakura Pink')" class="w-5 h-5 rounded-full bg-pink-200 border-2 border-slate-900 hover:scale-110 transition" title="Sakura Pink"></button>
+                                    <button type="button" onclick="setMascotCasing('#7e22ce', 'Atomic Purple')" class="w-5 h-5 rounded-full bg-purple-700 border-2 border-slate-900 hover:scale-110 transition" title="Atomic Purple"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Keunggulan Belanja sebagai Member -->
+                    <div class="grid grid-cols-3 gap-3 mt-5">
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-300 text-center">
+                            <i data-lucide="zap" class="w-4 h-4 mx-auto text-cyan-600 mb-1"></i>
+                            <div class="font-bold text-xs">Checkout Cepat</div>
+                            <div class="text-[10px] text-slate-500 font-mono-tech">Auto-isi Alamat</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-300 text-center">
+                            <i data-lucide="qr-code" class="w-4 h-4 mx-auto text-emerald-600 mb-1"></i>
+                            <div class="font-bold text-xs">Bayar Lengkap</div>
+                            <div class="text-[10px] text-slate-500 font-mono-tech">QRIS / VA / COD</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-300 text-center">
+                            <i data-lucide="shield-check" class="w-4 h-4 mx-auto text-amber-600 mb-1"></i>
+                            <div class="font-bold text-xs">Garansi Resmi</div>
+                            <div class="text-[10px] text-slate-500 font-mono-tech">100% Produk Asli</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================= -->
+            <!-- KOLOM KANAN (5 Kolom): FORM LOGIN & DATABASE AKUN PEMBELI -->
+            <!-- ========================================================= -->
+            <div class="lg:col-span-5 order-1 lg:order-2">
+                <div id="auth-card" class="wf-box rounded-2xl p-6 sm:p-7 bg-white space-y-5">
+
+                    <!-- BANNER JIKA SUDAH ADA SESI LOGIN PEMBELI AKTIF -->
+                    <div id="active-session-banner" class="hidden p-3.5 rounded-xl bg-emerald-50 border-2 border-emerald-700 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono-tech text-[10px] font-bold text-emerald-800 uppercase flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                SESI PEMBELI AKTIF
+                            </span>
+                            <button type="button" onclick="clearBuyerSession()" class="text-[10px] font-mono-tech text-rose-700 font-bold hover:underline">
+                                [Logout / Ganti Akun]
+                            </button>
+                        </div>
+                        <div class="text-xs text-slate-700">
+                            Anda sudah masuk sebagai <strong id="active-session-name" class="text-slate-900">Pembeli</strong>.
+                        </div>
+                        <a href="wireframe_penjualan_ganci_mochi_oled%20(1).html" class="wf-btn w-full py-2 px-3 rounded-lg bg-emerald-400 text-slate-900 font-extrabold text-xs flex items-center justify-center gap-1.5">
+                            <span>Lanjutkan ke Katalog Toko</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                    <!-- TAB SWITCHER: MASUK PEMBELI vs BUAT AKUN BARU -->
+                    <div class="grid grid-cols-2 gap-2 p-1.5 bg-slate-100 rounded-xl border-2 border-slate-900">
+                        <button type="button" id="tab-login" onclick="switchAuthTab('login')" class="py-2 px-3 rounded-lg font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 bg-cyan-400 text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_#0f172a]">
+                            <i data-lucide="log-in" class="w-4 h-4"></i>
+                            <span>Masuk Pembeli</span>
+                        </button>
+                        <button type="button" id="tab-register" onclick="switchAuthTab('register')" class="py-2 px-3 rounded-lg font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900">
+                            <i data-lucide="user-plus" class="w-4 h-4"></i>
+                            <span>Buat Akun Baru</span>
+                        </button>
+                    </div>
+
+                    <!-- PESAN ERROR / NOTIFIKASI INLINE -->
+                    <div id="auth-alert" class="hidden p-3 rounded-xl border-2 text-xs font-medium flex items-start gap-2"></div>
+
+                    <!-- ========================================== -->
+                    <!-- FORM 1: LOGIN PEMBELI                      -->
+                    <!-- ========================================== -->
+                    <form id="form-buyer-login" onsubmit="handleBuyerLogin(event)" class="space-y-4">
+                        <div>
+                            <h2 class="text-xl font-extrabold">Selamat Datang Pembeli!</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Masuk menggunakan Email atau No. WhatsApp yang terdaftar di database.</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono-tech font-bold uppercase mb-1.5">Email / No. WhatsApp *</label>
+                            <div class="relative">
+                                <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input
+                                    type="text"
+                                    id="login-identifier"
+                                    required
+                                    onfocus="onIdentifierFocus()"
+                                    placeholder="budi@pembeli.com atau 081234567890"
+                                    class="w-full pl-10 pr-3 py-2.5 rounded-xl border-2 border-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                                >
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label class="block text-xs font-mono-tech font-bold uppercase">Kata Sandi (Password) *</label>
+                            </div>
+                            <div class="relative">
+                                <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input
+                                    type="password"
+                                    id="login-password"
+                                    required
+                                    onfocus="onPasswordFocus()"
+                                    onblur="onPasswordBlur()"
+                                    placeholder="Masukkan password akun"
+                                    class="w-full pl-10 pr-10 py-2.5 rounded-xl border-2 border-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                                >
+                                <button type="button" onclick="togglePasswordVisibility('login-password', 'eye-login')" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-900 p-0.5">
+                                    <i id="eye-login" data-lucide="eye" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between text-xs">
+                            <label class="flex items-center gap-2 cursor-pointer select-none">
+                                <input type="checkbox" id="login-remember" checked class="w-4 h-4 accent-slate-900 rounded border-slate-900">
+                                <span class="text-slate-600 font-medium">Ingat sesi belanja saya</span>
+                            </label>
+                            <button type="button" onclick="switchAuthTab('register')" class="font-bold text-cyan-700 hover:underline">
+                                Belum punya akun? Daftar
+                            </button>
+                        </div>
+
+                        <button type="submit" class="wf-btn w-full py-3.5 px-5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-900 font-extrabold text-sm flex items-center justify-center gap-2">
+                            <span>Masuk &amp; Mulai Belanja</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+
+                        <!-- OPSI MASUK CEPAT TAMU -->
+                        <button type="button" onclick="loginAsGuestBuyer()" class="wf-btn w-full py-2.5 px-4 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs flex items-center justify-center gap-2">
+                            <i data-lucide="shopping-bag" class="w-4 h-4 text-cyan-600"></i>
+                            <span>Belanja Cepat Sebagai Tamu (Tanpa Daftar)</span>
+                        </button>
+                    </form>
+
+                    <!-- ========================================== -->
+                    <!-- FORM 2: PEMBUATAN AKUN PEMBELI BARU       -->
+                    <!-- ========================================== -->
+                    <form id="form-buyer-register" onsubmit="handleBuyerRegister(event)" class="hidden space-y-3.5">
+                        <div>
+                            <h2 class="text-xl font-extrabold">Pembuatan Akun Pembeli</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Data akun langsung tersimpan di database &amp; otomatis mengisi alamat saat checkout.</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono-tech font-bold uppercase mb-1">Nama Lengkap Penerima *</label>
+                            <input type="text" id="reg-name" required placeholder="Contoh: Andi Pratama" class="w-full px-3 py-2 rounded-xl border-2 border-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-mono-tech font-bold uppercase mb-1">Email Pembeli *</label>
+                                <input type="email" id="reg-email" required placeholder="andi@email.com" class="w-full px-3 py-2 rounded-xl border-2 border-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono-tech font-bold uppercase mb-1">No. WhatsApp Aktif *</label>
+                                <input type="tel" id="reg-wa" required placeholder="0812xxxxxxxx" class="w-full px-3 py-2 rounded-xl border-2 border-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono-tech font-bold uppercase mb-1">Alamat Pengiriman Lengkap *</label>
+                            <input type="text" id="reg-address" required placeholder="Jl. Contoh No. 12, Kecamatan, Kota, Kode Pos" class="w-full px-3 py-2 rounded-xl border-2 border-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-mono-tech font-bold uppercase mb-1">Buat Password *</label>
+                                <div class="relative">
+                                    <input
+                                        type="password"
+                                        id="reg-password"
+                                        required
+                                        minlength="4"
+                                        onfocus="onPasswordFocus()"
+                                        onblur="onPasswordBlur()"
+                                        placeholder="Min. 4 karakter"
+                                        class="w-full px-3 pr-9 py-2 rounded-xl border-2 border-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                                    >
+                                    <button type="button" onclick="togglePasswordVisibility('reg-password', 'eye-reg')" class="absolute right-2.5 top-2 text-slate-500 hover:text-slate-900 p-0.5">
+                                        <i id="eye-reg" data-lucide="eye" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono-tech font-bold uppercase mb-1">Konfirmasi Password *</label>
+                                <input
+                                    type="password"
+                                    id="reg-password-confirm"
+                                    required
+                                    minlength="4"
+                                    onfocus="onPasswordFocus()"
+                                    onblur="onPasswordBlur()"
+                                    placeholder="Ulangi password"
+                                    class="w-full px-3 py-2 rounded-xl border-2 border-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                                >
+                            </div>
+                        </div>
+
+                        <button type="submit" class="wf-btn w-full py-3.5 px-5 rounded-xl bg-slate-900 hover:bg-slate-800 text-cyan-400 font-extrabold text-sm flex items-center justify-center gap-2">
+                            <i data-lucide="user-check" class="w-4 h-4"></i>
+                            <span>Simpan Akun ke Database &amp; Masuk Toko</span>
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER PEMBELI (TANPA LINK ADMIN) -->
+    <footer class="border-t-2 border-slate-900 bg-white py-5 mt-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-mono-tech">
+            <div>
+                © 2026 MOCHI.OLED INDONESIA — Official Smart Keychain Storefront
+            </div>
+            <div>
+                [METODE PEMBAYARAN: QRIS • E-WALLET • VIRTUAL ACCOUNT • COD]
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shared Cloud Sync & Buyer Auth Script (JS Terpisah) -->
+    <script src="js/cloud-config.js"></script>
+    <script src="js/cloud-sync.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

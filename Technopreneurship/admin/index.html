@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOCHI.ADMIN // Login Otorisasi Admin & Manajemen Stok</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Space Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Stylesheet (CSS Terpisah) -->
+    <link rel="stylesheet" href="css/admin-login.css">
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- TOP SECURITY BAR -->
+    <div class="bg-slate-900 text-white text-xs font-mono-tech py-2 px-4 border-b-2 border-slate-950">
+        <div class="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+                <span class="text-amber-400 font-bold">RESTRICTED PORTAL // MOCHI.ADMIN BACKOFFICE</span>
+            </div>
+            <a href="../index.html" class="text-cyan-400 hover:underline flex items-center gap-1 font-bold">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                <span>[Kembali ke Login Pembeli / Utama]</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- HEADER ADMIN AUTH -->
+    <header class="bg-white/95 backdrop-blur border-b-2 border-slate-900">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-400 rounded-lg flex items-center justify-center border-2 border-slate-900 shadow-[2px_2px_0px_#0f172a]">
+                    <i data-lucide="sliders" class="w-5 h-5 text-slate-900"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-extrabold text-lg tracking-tight leading-none">MOCHI<span class="text-amber-600">.ADMIN</span></span>
+                        <span class="px-1.5 py-0.5 text-[10px] font-mono-tech font-bold bg-slate-900 text-amber-400 rounded">AUTH GATE</span>
+                    </div>
+                    <span class="font-mono-tech text-[10px] text-slate-500 block mt-0.5">OTORISASI MANAJEMEN STOK & KATALOG</span>
+                </div>
+            </div>
+
+            <a href="../index.html" class="wf-btn px-3.5 py-2 rounded-lg bg-white hover:bg-slate-50 text-slate-900 text-xs font-bold flex items-center gap-1.5">
+                <i data-lucide="store" class="w-4 h-4 text-cyan-600"></i>
+                <span>Halaman Pembeli</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="flex-grow flex items-center justify-center py-10 px-4 sm:px-6">
+        <div class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+
+            <!-- PANEL KIRI (5 Kolom): SECURITY GUARD OLED DISPLAY -->
+            <div class="md:col-span-5 wf-box rounded-2xl p-6 bg-slate-900 text-white flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-5">
+                        <span class="font-mono-tech text-[11px] text-amber-400 font-bold">// SECURITY MODULE</span>
+                        <span id="guard-badge" class="px-2 py-0.5 rounded bg-slate-800 border border-slate-600 font-mono-tech text-[10px] text-slate-300">STANDBY</span>
+                    </div>
+
+                    <!-- Visual Mochi Guard OLED -->
+                    <div class="flex flex-col items-center my-4">
+                        <div class="w-6 h-4 border-2 border-slate-600 rounded-t-full -mb-1"></div>
+                        <div class="w-48 h-36 bg-amber-400 rounded-[1.8rem] p-3 border-4 border-slate-950 shadow-[0_6px_0_#000000] flex flex-col items-center justify-center">
+                            <div class="w-10 h-1 bg-slate-900/40 rounded-full mb-1.5"></div>
+                            <div class="oled-screen w-full h-20 rounded-xl border-2 border-slate-900 flex items-center justify-center">
+                                <div class="oled-scanline"></div>
+                                <div id="guard-oled-face" class="w-full h-full flex items-center justify-center"></div>
+                            </div>
+                            <div class="mt-1.5 flex items-center justify-between w-full px-1 text-slate-900 font-bold">
+                                <span class="font-mono-tech text-[8px]">MOCHI-SEC</span>
+                                <span id="guard-mode-label" class="font-mono-tech text-[8px]">LOCKED</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 p-3.5 rounded-xl bg-slate-800/90 border border-slate-700">
+                        <div class="font-mono-tech text-[10px] text-amber-400 font-bold uppercase mb-1">SYSTEM LOG:</div>
+                        <p id="guard-message" class="font-mono-tech text-xs text-slate-300 leading-relaxed">
+                            Masukkan kredensial Admin untuk mengakses Kontrol Stok Real-Time & Penambahan Produk Baru.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pt-5 mt-5 border-t border-slate-800 space-y-1.5 font-mono-tech text-[11px] text-slate-400">
+                    <div class="flex justify-between">
+                        <span>DATABASE TARGET:</span>
+                        <span class="text-cyan-400">MOCHI_STORE_DB_V1</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>SYNC CHANNEL:</span>
+                        <span class="text-emerald-400">LIVE BROADCAST</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL KANAN (7 Kolom): FORM LOGIN ADMIN -->
+            <div id="admin-auth-card" class="md:col-span-7 wf-box rounded-2xl p-6 sm:p-8 bg-white flex flex-col justify-between space-y-5">
+                <div class="space-y-5">
+                    <!-- Banner Sesi Admin Aktif (Jika sudah login sebelumnya) -->
+                    <div id="active-admin-banner" class="hidden p-3.5 rounded-xl bg-amber-50 border-2 border-amber-600 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono-tech text-[10px] font-bold text-amber-900 uppercase flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                SESI ADMIN MASIH AKTIF
+                            </span>
+                            <button type="button" onclick="clearAdminSession()" class="text-[10px] font-mono-tech text-rose-700 font-bold hover:underline">
+                                [Logout Sesi]
+                            </button>
+                        </div>
+                        <div class="text-xs text-slate-700">
+                            Login aktif sebagai <strong id="active-admin-name" class="text-slate-900">Super Admin</strong>.
+                        </div>
+                        <a href="dashboard.html" class="wf-btn w-full py-2 px-3 rounded-lg bg-amber-400 text-slate-900 font-extrabold text-xs flex items-center justify-center gap-1.5">
+                            <span>Buka Dashboard Admin Sekarang</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                    <div class="border-b-2 border-slate-900 pb-4">
+                        <span class="px-2 py-0.5 bg-slate-900 text-amber-400 font-mono-tech text-[10px] font-bold rounded">ADMIN LOGIN</span>
+                        <h1 class="text-2xl font-extrabold mt-2">Otorisasi Pengelola Toko</h1>
+                        <p class="text-xs text-slate-500 mt-0.5">Halaman khusus Admin & Staff Gudang untuk mengelola inventaris Ganci Mochi OLED.</p>
+                    </div>
+
+                    <!-- Alert Error / Sukses -->
+                    <div id="admin-alert" class="hidden p-3 rounded-xl border-2 text-xs font-medium flex items-start gap-2"></div>
+
+                    <!-- Form Login Admin -->
+                    <form id="form-admin-login" onsubmit="handleAdminLogin(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-mono-tech font-bold uppercase mb-1.5">Username / Email Admin *</label>
+                            <div class="relative">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input
+                                    type="text"
+                                    id="admin-username"
+                                    required
+                                    onfocus="onAdminInputFocus()"
+                                    placeholder="admin@mochi.id atau admin"
+                                    class="w-full pl-10 pr-3 py-2.5 rounded-xl border-2 border-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-400"
+                                >
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono-tech font-bold uppercase mb-1.5">Password Otorisasi *</label>
+                            <div class="relative">
+                                <i data-lucide="key-round" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input
+                                    type="password"
+                                    id="admin-password"
+                                    required
+                                    onfocus="onAdminPasswordFocus()"
+                                    onblur="onAdminPasswordBlur()"
+                                    placeholder="Masukkan password admin"
+                                    class="w-full pl-10 pr-10 py-2.5 rounded-xl border-2 border-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+                                >
+                                <button type="button" onclick="toggleAdminPass()" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-900 p-0.5">
+                                    <i id="eye-admin" data-lucide="eye" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono-tech font-bold uppercase mb-1.5 flex items-center justify-between">
+                                <span>PIN Keamanan (6 Digit) *</span>
+                                <span class="text-[10px] text-amber-700 font-bold">2FA WAJIB</span>
+                            </label>
+                            <div class="relative">
+                                <i data-lucide="lock-keyhole" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input
+                                    type="password"
+                                    id="admin-pin"
+                                    required
+                                    maxlength="6"
+                                    inputmode="numeric"
+                                    pattern="[0-9]{6}"
+                                    autocomplete="off"
+                                    onfocus="onAdminPinFocus()"
+                                    onblur="onAdminPasswordBlur()"
+                                    placeholder="Masukkan 6 digit PIN keamanan"
+                                    class="w-full pl-10 pr-10 py-2.5 rounded-xl border-2 border-slate-900 text-sm font-mono-tech tracking-widest focus:outline-none focus:ring-2 focus:ring-amber-400"
+                                >
+                                <button type="button" onclick="togglePinVisibility()" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-900 p-0.5">
+                                    <i id="eye-pin" data-lucide="eye" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="btn-admin-submit" class="wf-btn w-full py-3.5 px-5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-extrabold text-sm flex items-center justify-center gap-2">
+                            <i data-lucide="unlock" class="w-4 h-4"></i>
+                            <span>Masuk ke Panel Manajemen Admin</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- INFORMASI PROTEKSI KEAMANAN ADMIN (TANPA KREDENSIAL PUBLIK) -->
+                <div class="pt-4 border-t-2 border-dashed border-slate-200">
+                    <div class="p-3.5 rounded-xl border-2 border-slate-900 bg-amber-50/70 space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono-tech text-[10px] font-bold text-slate-900 uppercase flex items-center gap-1.5">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-700"></i>
+                                PROTEKSI HASH SHA-256 + PIN 6-DIGIT AKTIF
+                            </span>
+                            <span id="cloud-admin-badge" class="px-1.5 py-0.5 bg-slate-900 text-emerald-400 font-mono-tech text-[9px] rounded font-bold">
+                                LOKAL
+                            </span>
+                        </div>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">
+                            Kredensial admin tidak ditampilkan di halaman publik. Salah memasukkan Password/PIN sebanyak <strong>5 kali</strong> akan mengunci login otomatis selama 60 detik. Ubah Password & PIN melalui <strong>Dashboard Admin &rarr; Cloud &amp; Keamanan</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t-2 border-slate-900 bg-white py-4">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono-tech text-slate-500">
+            <div>MOCHI.ADMIN SECURITY GATE v2.1</div>
+            <div>Ingin berbelanja sebagai pembeli? <a href="../index.html" class="font-bold text-slate-900 underline decoration-cyan-400 decoration-2">Ke Halaman Utama Pembeli</a></div>
+        </div>
+    </footer>
+
+    <!-- Shared Cloud Sync & Admin Auth Gate Script (JS Terpisah) -->
+    <script src="../js/cloud-config.js"></script>
+    <script src="../js/cloud-sync.js"></script>
+    <script src="js/admin-login.js"></script>
+</body>
+</html>
+
